@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getData, getPrice, addPrice, formatDate } from '../firestoreFunctions';
+import { getData, getPrice, addPrice, formatDate, deletePrice } from '../firestoreFunctions';
 import { set } from 'firebase/database';
 
 function Main() {
@@ -33,6 +33,14 @@ function Main() {
         setPrice('');
     }
 
+    const handleDeletePrice = async (id) => {
+        await deletePrice(id);
+
+        // Get the updated data
+        const updatedPrices = await getPrice();
+        setPrices(updatedPrices);
+    }
+
     return (
         <div>
             <div>
@@ -41,6 +49,7 @@ function Main() {
                     {prices.map(price => (
                         <li key={price.id}>
                             {formatDate(price.date.toDate())}: {price.price}
+                            <button onClick={() => handleDeletePrice(price.id)}>🗑️</button>
                         </li>
                     ))}
                 </ul>

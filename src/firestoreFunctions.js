@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 export const getData = async () => {
     const querySnapshot = await getDocs(collection(db, "users")); // "users" is the name of the collection
@@ -19,6 +19,15 @@ export const addPrice = async (price) => {
         console.log("Document written with ID: ", docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
+    }
+}
+
+export const deletePrice = async (id) => {
+    try {
+        await deleteDoc(doc(db, "prices", id));
+        console.log("Document successfully deleted!");
+    } catch (e) {
+        console.error("Error removing document: ", e);
     }
 }
 
