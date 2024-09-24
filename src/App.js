@@ -1,5 +1,7 @@
 import logo from './inu-test.JPG';
 import './App.css';
+import Main from './components/Main';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         </p>
 
       </header>
+      <Main />
+      <Footer />
     </div>
   );
 }
