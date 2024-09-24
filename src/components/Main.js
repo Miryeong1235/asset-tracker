@@ -1,73 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { getData, addUser } from '../firestoreFunctions';
+import { getData, getPrice, addPrice, formatDate } from '../firestoreFunctions';
+import { set } from 'firebase/database';
 
 function Main() {
-    const [users, setUsers] = useState([]);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [age, setAge] = useState('');
+    const [prices, setPrices] = useState([]);
+    const [date, setDate] = useState('');
+    const [price, setPrice] = useState('');
 
-    // データを取得して表示
+    // Fetch data when the component is mounted
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await getData();
-            setUsers(data);
-        };
+        const fetchPrice = async () => {
+            const data = await getPrice();
+            setPrices(data);
+        }
 
-        fetchData();
+        fetchPrice();
     }, []);
 
-    // ユーザーを追加する
-    const handleAddUser = async (e) => {
-        e.preventDefault(); // ページのリロードを防ぐ
-        await addUser({ firstName, lastName, age: Number(age) });
+    // Add price data
+    const handleAddPrice = async (e) => {
+        e.preventDefault(); // Preventing from refreshing the page
 
-        // データを再取得して表示を更新
-        const updatedUsers = await getData();
-        setUsers(updatedUsers);
+        const parsedDate = new Date(date);
+        await addPrice({ date: parsedDate, price: Number(price) });
 
-        // フォームをリセット
-        setFirstName('');
-        setLastName('');
-        setAge('');
-    };
+        // Get the updated data
+        const updatedPrices = await getPrice();
+        setPrices(updatedPrices);
+
+        // Reset the input fields
+        setDate('');
+        setPrice('');
+    }
 
     return (
         <div>
-            <h1>Users List</h1>
-            <ul>
-                {users.map(user => (
-                    <li key={user.id}>
-                        {user.firstName} {user.lastName}, Age: {user.age}
-                    </li>
-                ))}
-            </ul>
+            <div>
+                <h1>Price List</h1>
+                <ul>
+                    {prices.map(price => (
+                        <li key={price.id}>
+                            {formatDate(price.date.toDate())}: {price.price}
+                        </li>
+                    ))}
+                </ul>
 
-            {/* ユーザーを追加するフォーム */}
-            <form onSubmit={handleAddUser}>
-                <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First Name"
-                    required
-                />
-                <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last Name"
-                    required
-                />
-                <input
-                    type="number"
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    placeholder="Age"
-                    required
-                />
-                <button type="submit">Add User</button>
-            </form>
+                {/* Form to add data of user*/}
+                <form onSubmit={handleAddPrice}>
+                    <input
+                        type="date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        placeholder="date"
+                        required
+                    />
+                    <input
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        placeholder="Price"
+                        required
+                    />
+                    <button type="submit">Add Price Data</button>
+                </form>
+            </div>
         </div>
     );
 }
