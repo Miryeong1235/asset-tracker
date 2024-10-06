@@ -1,11 +1,11 @@
 import { db } from './firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
-export const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, "users")); // "users" is the name of the collection
-    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    return data;
-};
+// export const getData = async () => {
+//     const querySnapshot = await getDocs(collection(db, "users")); // "users" is the name of the collection
+//     const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+//     return data;
+// };
 
 export const getPrice = async () => {
     const querySnapshot = await getDocs(collection(db, "prices")); // "prices" is the name of the collection

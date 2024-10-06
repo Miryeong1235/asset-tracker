@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getData, getPrice, addPrice, formatDate, deletePrice } from '../firestoreFunctions';
-import { set } from 'firebase/database';
+import { getPrice, addPrice, formatDate, deletePrice } from '../firestoreFunctions';
 import './Main.css';
+import PriceGraph from './PriceGraph';
 
 function Main() {
     const [prices, setPrices] = useState([]);
@@ -90,6 +90,9 @@ function Main() {
                     <button type="submit">Add Price Data</button>
                 </form>
             </div>
+
+            {/* Pass prices to PriceGraph as a prop */}
+            <PriceGraph prices={prices} />
         </div>
     );
 }
