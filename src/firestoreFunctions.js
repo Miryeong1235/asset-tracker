@@ -1,30 +1,41 @@
 import { db } from './firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
-// export const getData = async () => {
-//     const querySnapshot = await getDocs(collection(db, "users")); // "users" is the name of the collection
-//     const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-//     return data;
-// };
-
-export const getPrice = async () => {
-    const querySnapshot = await getDocs(collection(db, "prices")); // "prices" is the name of the collection
+export const getAccounts = async () => {
+    const querySnapshot = await getDocs(collection(db, "accounts"));
     const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return data;
 };
 
-export const addPrice = async (price) => {
+export const addNewAccount = async (accountName) => {
     try {
-        const docRef = await addDoc(collection(db, "prices"), price);
+        const docRef = await addDoc(collection(db, "accounts"), { name: accountName });
+        console.log("Document written with ID: ", docRef.id);
+        return { id: docRef.id, name: accountName };
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        throw new Error(e, "Error adding document");
+    }
+};
+
+export const getPrice = async (accountId) => {
+    const querySnapshot = await getDocs(collection(db, `accounts/${accountId}/prices`));
+    const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return data;
+};
+
+export const addPrice = async (accountId, price) => {
+    try {
+        const docRef = await addDoc(collection(db, `accounts/${accountId}/prices`), price);
         console.log("Document written with ID: ", docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
     }
 }
 
-export const deletePrice = async (id) => {
+export const deletePrice = async (accountId, id) => {
     try {
-        await deleteDoc(doc(db, "prices", id));
+        await deleteDoc(doc(db, `accounts/${accountId}/prices`, id));
         console.log("Document successfully deleted!");
     } catch (e) {
         console.error("Error removing document: ", e);
