@@ -47,8 +47,10 @@ function Main() {
             accountToUse = newAccount.id;
         }
 
-        const parsedDate = new Date(date);
-        await addPrice(accountToUse, { date: parsedDate, price: Number(price) });
+        const parsedDate = new Date(date + 'T00:00:00');
+        const localDate = new Date(parsedDate.toLocaleString('en-US', { timeZone: 'America/Vancouver' }));
+
+        await addPrice(accountToUse, { date: localDate, price: Number(price) });
 
         // Get the updated data
         const updatedPrices = await getPrice(accountToUse);
