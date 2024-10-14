@@ -1,15 +1,22 @@
 import { db } from './firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { auth } from './firebase';
 
 export const getAccounts = async () => {
-    const querySnapshot = await getDocs(collection(db, "accounts"));
+    const user = auth.currentUser;
+    if (!user) throw new Error("User not logged in");
+
+    const querySnapshot = await getDocs(collection(db, `users/${user.uid}/accounts`));
     const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return data;
 };
 
 export const addNewAccount = async (accountName) => {
     try {
-        const docRef = await addDoc(collection(db, "accounts"), { name: accountName });
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not logged in");
+
+        const docRef = await addDoc(collection(db, `users/${user.uid}/accounts`), { name: accountName });
         console.log("Document written with ID: ", docRef.id);
         return { id: docRef.id, name: accountName };
     } catch (e) {
@@ -19,14 +26,20 @@ export const addNewAccount = async (accountName) => {
 };
 
 export const getPrice = async (accountId) => {
-    const querySnapshot = await getDocs(collection(db, `accounts/${accountId}/prices`));
+    const user = auth.currentUser;
+    if (!user) throw new Error("User not logged in");
+
+    const querySnapshot = await getDocs(collection(db, `users/${user.uid}/accounts/${accountId}/prices`));
     const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return data;
 };
 
 export const addPrice = async (accountId, price) => {
     try {
-        const docRef = await addDoc(collection(db, `accounts/${accountId}/prices`), price);
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not logged in");
+
+        const docRef = await addDoc(collection(db, `users/${user.uid}/accounts/${accountId}/prices`), price);
         console.log("Document written with ID: ", docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);

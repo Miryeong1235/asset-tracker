@@ -3,6 +3,7 @@ import { getAccounts, getPrice, addPrice, formatDate, deletePrice, addNewAccount
 import './Main.css';
 import PriceGraph from './PriceGraph';
 import { set } from 'firebase/database';
+import { auth } from '../firebase';
 
 function Main() {
     const [prices, setPrices] = useState([]);
@@ -16,8 +17,13 @@ function Main() {
     // Fetch accounts on mount
     useEffect(() => {
         const fetchAccounts = async () => {
-            const data = await getAccounts();
-            setAccounts(data);
+            const user = auth.currentUser;
+            if (user) {
+                const data = await getAccounts();
+                setAccounts(data);
+            } else {
+                console.log("User not logged in");
+            }
         }
 
         fetchAccounts();
