@@ -31,3 +31,16 @@
 .navbar-links a:hover {
     color: #ffcc00;
 }
+
+.navbar-links button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbar-links button:hover {
+    color: #ffcc00;
+}

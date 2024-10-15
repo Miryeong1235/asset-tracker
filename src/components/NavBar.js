@@ -1,9 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 import "./NavBar.css";
 
 const NavBar = (props) => {
     const { currentUser } = props;
+    const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        const auth = getAuth();
+        signOut(auth)
+            .then(() => {
+                navigate("/"); // Redirect to home page after sign out
+            })
+            .catch((error) => {
+                console.error("Error signing out", error);
+            });
+    }
 
     return (
         <nav className="navbar">
@@ -18,7 +31,7 @@ const NavBar = (props) => {
                             <Link to="/profile">Profile</Link>
                         </li>
                         <li>
-                            <Link to="/signout">Sign Out</Link>
+                            <button onClick={handleSignOut}>Sign Out</button>
                         </li>
                     </>
                 )}
