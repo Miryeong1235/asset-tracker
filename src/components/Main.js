@@ -13,6 +13,7 @@ function Main() {
     const [newAccountName, setNewAccountName] = useState(''); // To create a new account 
     const [filteredPrices, setFilteredPrices] = useState([]);
     const [filterType, setFilterType] = useState('All');
+    const [growthRate, setGrowthRate] = useState(null);
 
     // Fetch accounts on mount
     useEffect(() => {
@@ -49,6 +50,10 @@ function Main() {
         }
     }, [prices, filterType]);
 
+    useEffect(() => {
+        calculateGrowthRate(filteredPrices);
+    }, [filteredPrices]);
+
     const applyFilter = (data, filterType) => {
         let filteredData = data;
         const now = new Date();
@@ -64,6 +69,17 @@ function Main() {
         }
 
         setFilteredPrices(filteredData);
+    }
+
+    const calculateGrowthRate = (filteredData) => {
+        if (filteredData.length > 1) {
+            const firstPrice = filteredData[0].price;
+            const lastPrice = filteredData[filteredData.length - 1].price;
+            const growthRate = ((lastPrice - firstPrice) / firstPrice) * 100;
+            setGrowthRate(growthRate.toFixed(2));
+        } else {
+            setGrowthRate(null);
+        }
     }
 
     const handleFilterChange = (e) => {
@@ -158,14 +174,6 @@ function Main() {
                 <br />
 
                 {/* Price table */}
-                <h2>Price List</h2>
-
-                {/* <select value={selectedPriceListAccount} onChange={handlePriceListAccountChange}>
-                    <option value="">Select an account</option>
-                    {accounts.map(account => (
-                        <option key={account.id} value={account.id}>{account.name}</option>
-                    ))}
-                </select> */}
 
                 <div className='durationRadioButton'>
                     <label>
@@ -209,8 +217,9 @@ function Main() {
             {/* Pass prices to PriceGraph as a prop */}
 
 
-            <h3>Portfolio growth rate:</h3>
+            <h3>Portfolio growth rate: {growthRate !== null ? `${growthRate}%` : `N/A`}</h3>
             <PriceGraph prices={filteredPrices} />
+
         </div>
     );
 }

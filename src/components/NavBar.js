@@ -27,9 +27,9 @@ const NavBar = (props) => {
                 </li>
                 {currentUser && (
                     <>
-                        <li>
+                        {/* <li>
                             <Link to="/profile">Profile</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <button onClick={handleSignOut}>Sign Out</button>
                         </li>
