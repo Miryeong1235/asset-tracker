@@ -25,14 +25,14 @@ function PriceGraph({ prices }) {
 
     return (
         <div>
-            <h1>Price Graph</h1>
+
             <Plot
                 data={[
                     {
                         x: dates,
                         y: priceArray,
                         type: 'scatter',
-                        mode: 'lines+points',
+                        mode: 'lines+markers',
                         marker: { color: '#80A1D4' },
                     },
                 ]}

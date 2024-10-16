@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { getAccounts, getPrice, addPrice, formatDate, deletePrice, addNewAccount } from '../firestoreFunctions';
 import './Main.css';
 import PriceGraph from './PriceGraph';
-import { set } from 'firebase/database';
 import { auth } from '../firebase';
 
 function Main() {
@@ -13,6 +12,8 @@ function Main() {
     const [selectedAccount, setSelectedAccount] = useState('');
     const [newAccountName, setNewAccountName] = useState(''); // To create a new account 
     const [selectedPriceListAccount, setSelectedPriceListAccount] = useState('');
+    const [filteredPrices, setFilteredPrices] = useState([]);
+    const [filterType, setFilterType] = useState('All');
 
     // Fetch accounts on mount
     useEffect(() => {
@@ -36,11 +37,39 @@ function Main() {
                 const data = await getPrice(selectedPriceListAccount);
                 const sortedData = data.sort((a, b) => a.date.toDate() - b.date.toDate());
                 setPrices(sortedData);
+                applyFilter(sortedData, filteredPrices);
             }
 
             fetchPrice();
         }
     }, [selectedPriceListAccount]);
+
+    useEffect(() => {
+        if (prices.length > 0) {
+            applyFilter(prices, filterType);
+        }
+    }, [prices, filterType]);
+
+    const applyFilter = (data, filterType) => {
+        let filteredData = data;
+        const now = new Date();
+
+        if (filterType === '1 month') {
+            const oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1));
+            filteredData = data.filter(price => price.date.toDate() >= oneMonthAgo);
+        } else if (filterType === '1 year') {
+            const oneMonthAgo = new Date(now.setFullYear(now.getFullYear() - 1));
+            filteredData = data.filter(price => price.date.toDate() >= oneMonthAgo);
+        } else {
+            filteredData = data; // for all data
+        }
+
+        setFilteredPrices(filteredData);
+    }
+
+    const handleFilterChange = (e) => {
+        setFilterType(e.target.value);
+    }
 
     const handleAddPriceAndCreateNewAccount = async (e) => {
         e.preventDefault(); // Preventing from refreshing the page
@@ -78,23 +107,6 @@ function Main() {
         setSelectedPriceListAccount(e.target.value);
     }
 
-    // // Add price data
-    // const handleAddPrice = async (e) => {
-    //     e.preventDefault(); // Preventing from refreshing the page
-
-    //     const parsedDate = new Date(date);
-    //     await addPrice(selectedAccount, { date: parsedDate, price: Number(price) });
-
-    //     // Get the updated data
-    //     const updatedPrices = await getPrice(selectedAccount);
-    //     const sortedData = updatedPrices.sort((a, b) => a.date.toDate() - b.date.toDate());
-    //     setPrices(sortedData);
-
-    //     // Reset the input fields
-    //     setDate('');
-    //     setPrice('');
-    // }
-
     const handleDeletePrice = async (id) => {
         await deletePrice(selectedAccount, id);
 
@@ -107,7 +119,7 @@ function Main() {
     return (
         <div>
             <div>
-                <h1>Add Data</h1>
+                <h2>Add New Data</h2>
 
                 {/* Dropdown for selecting account */}
                 <select value={selectedAccount} onChange={handleAccountChange}>
@@ -148,9 +160,10 @@ function Main() {
                         <button type="submit">Add Price Data</button>
                     </form>
                 )}
+                <br />
 
                 {/* Price table */}
-                <h1>Price List</h1>
+                <h2>Price List</h2>
 
                 <select value={selectedPriceListAccount} onChange={handlePriceListAccountChange}>
                     <option value="">Select an account</option>
@@ -158,6 +171,21 @@ function Main() {
                         <option key={account.id} value={account.id}>{account.name}</option>
                     ))}
                 </select>
+
+                <div className='durationRadioButton'>
+                    <label>
+                        <input type="radio" value="All" checked={filterType === 'All'} onChange={handleFilterChange} />
+                        All
+                    </label>
+                    <label>
+                        <input type="radio" value="1 year" checked={filterType === '1 year'} onChange={handleFilterChange} />
+                        1 year
+                    </label>
+                    <label>
+                        <input type="radio" value="1 month" checked={filterType === '1 month'} onChange={handleFilterChange} />
+                        1 month
+                    </label>
+                </div>
 
                 <table>
                     <thead>
@@ -168,7 +196,7 @@ function Main() {
                         </tr>
                     </thead>
                     <tbody>
-                        {prices.map(price => (
+                        {filteredPrices.map(price => (
                             <tr key={price.id}>
                                 <td>{formatDate(price.date.toDate())}</td>
                                 <td>{price.price}</td>
@@ -184,7 +212,10 @@ function Main() {
             </div>
 
             {/* Pass prices to PriceGraph as a prop */}
-            <PriceGraph prices={prices} />
+
+
+            <h3>Portfolio growth rate:</h3>
+            <PriceGraph prices={filteredPrices} />
         </div>
     );
 }

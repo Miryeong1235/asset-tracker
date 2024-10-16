@@ -22,3 +22,7 @@ tr:hover {
 #deleteButton {
     cursor: pointer;
 }
+
+.durationRadioButton {
+    margin: 15px;
+}
