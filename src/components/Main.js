@@ -11,7 +11,6 @@ function Main() {
     const [accounts, setAccounts] = useState([]);
     const [selectedAccount, setSelectedAccount] = useState('');
     const [newAccountName, setNewAccountName] = useState(''); // To create a new account 
-    const [selectedPriceListAccount, setSelectedPriceListAccount] = useState('');
     const [filteredPrices, setFilteredPrices] = useState([]);
     const [filterType, setFilterType] = useState('All');
 
@@ -32,17 +31,17 @@ function Main() {
 
     // Fetch data when the component is mounted
     useEffect(() => {
-        if (selectedPriceListAccount) {
+        if (selectedAccount) {
             const fetchPrice = async () => {
-                const data = await getPrice(selectedPriceListAccount);
+                const data = await getPrice(selectedAccount);
                 const sortedData = data.sort((a, b) => a.date.toDate() - b.date.toDate());
                 setPrices(sortedData);
-                applyFilter(sortedData, filteredPrices);
+                applyFilter(sortedData, filterType);
             }
 
             fetchPrice();
         }
-    }, [selectedPriceListAccount]);
+    }, [selectedAccount]);
 
     useEffect(() => {
         if (prices.length > 0) {
@@ -103,10 +102,6 @@ function Main() {
         setSelectedAccount(account);
     }
 
-    const handlePriceListAccountChange = async (e) => {
-        setSelectedPriceListAccount(e.target.value);
-    }
-
     const handleDeletePrice = async (id) => {
         await deletePrice(selectedAccount, id);
 
@@ -165,12 +160,12 @@ function Main() {
                 {/* Price table */}
                 <h2>Price List</h2>
 
-                <select value={selectedPriceListAccount} onChange={handlePriceListAccountChange}>
+                {/* <select value={selectedPriceListAccount} onChange={handlePriceListAccountChange}>
                     <option value="">Select an account</option>
                     {accounts.map(account => (
                         <option key={account.id} value={account.id}>{account.name}</option>
                     ))}
-                </select>
+                </select> */}
 
                 <div className='durationRadioButton'>
                     <label>
