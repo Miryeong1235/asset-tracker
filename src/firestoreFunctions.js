@@ -48,7 +48,10 @@ export const addPrice = async (accountId, price) => {
 
 export const deletePrice = async (accountId, id) => {
     try {
-        await deleteDoc(doc(db, `accounts/${accountId}/prices`, id));
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not logged in");
+
+        await deleteDoc(doc(db, `users/${user.uid}/accounts/${accountId}/prices`, id));
         console.log("Document successfully deleted!");
     } catch (e) {
         console.error("Error removing document: ", e);

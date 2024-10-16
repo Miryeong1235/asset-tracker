@@ -8,6 +8,7 @@ import './App.css';
 import NavBar from './components/NavBar';
 import Main from './components/Main';
 import SignOut from './components/signOut';
+import Header from './components/Header';
 import Footer from './components/Footer';
 
 function App() {
@@ -27,14 +28,8 @@ function App() {
       <div className="App">
         <NavBar currentUser={currentUser} />
 
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="test" />
-          <p>
-            Hi this is test. <br />
-            This is an app to track your assets.
-          </p>
+        <Header />
 
-        </header>
         <Routes>
           <Route
             path="/signin"
