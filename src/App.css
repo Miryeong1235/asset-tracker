@@ -1,6 +1,13 @@
+.body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #F7F4EA;
+  height: 100%;
+}
+
 .App {
   text-align: center;
-  background-color: #F7F4EA;
   font-family: Lato, sans-serif;
 }
 

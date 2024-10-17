@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import SignIn from './components/SignIn';
-import logo from './inu-test.JPG';
 import './App.css';
 import NavBar from './components/NavBar';
 import Main from './components/Main';
-import SignOut from './components/signOut';
+import SignUp from './components/SignUp';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -31,6 +30,10 @@ function App() {
         <Header />
 
         <Routes>
+          <Route
+            path="/signup"
+            element={<SignUp />} />
+
           <Route
             path="/signin"
             element={<SignIn />} />

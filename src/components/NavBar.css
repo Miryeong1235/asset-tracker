@@ -22,6 +22,11 @@
     display: inline;
 }
 
+.navbar-links li.signin-signup {
+    display: flex;
+    gap: 15px;
+}
+
 .navbar-links a {
     color: white;
     text-decoration: none;

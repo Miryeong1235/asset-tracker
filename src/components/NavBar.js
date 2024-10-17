@@ -36,8 +36,9 @@ const NavBar = (props) => {
                     </>
                 )}
                 {!currentUser && (
-                    <li>
+                    <li className="signin-signup">
                         <Link to="/signin">Sign In</Link>
+                        <Link to={"/signup"}>Sign Up</Link>
                     </li>
                 )}
             </ul>
