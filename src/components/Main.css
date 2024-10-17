@@ -96,6 +96,7 @@ form {
 
 input[type="date"],
 input[type="number"],
+input[type="text"],
 form select {
     padding: 6px 4px;
     border: 2px solid #c3c3e8;
@@ -109,7 +110,8 @@ form select {
 
 select:focus,
 input[type="date"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="text"]:focus {
     border-color: #7075b6;
     outline: none;
 }

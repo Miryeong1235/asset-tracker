@@ -99,7 +99,7 @@ function Main() {
 
         let accountToUse = selectedAccount;
 
-        if (selectedAccount === 'Other' && newAccountName) {
+        if (selectedAccount === 'Create new account' && newAccountName) {
             const newAccount = await addNewAccount(newAccountName);
             setAccounts([...accounts, newAccount]);
             accountToUse = newAccount.id;
@@ -142,14 +142,14 @@ function Main() {
 
                 {/* Dropdown for selecting account */}
                 <select value={selectedAccount} onChange={handleAccountChange}>
-                    <option value="">Select an account</option>
+                    <option value="">- Select an account -</option>
                     {accounts.map(account => (
                         <option key={account.id} value={account.id}>{account.name}</option>
                     ))}
-                    <option value='Other'>Other</option>
+                    <option value='Create new account'>Create new account</option>
                 </select>
 
-                {selectedAccount === 'Other' && (
+                {selectedAccount === 'Create new account' && (
                     <input
                         type="text"
                         value={newAccountName}
