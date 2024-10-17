@@ -22,6 +22,10 @@ function Main() {
             if (user) {
                 const data = await getAccounts();
                 setAccounts(data);
+
+                if (data.length > 0) {
+                    setSelectedAccount(data[0].id);
+                }
             } else {
                 console.log("User not logged in");
             }
@@ -61,6 +65,10 @@ function Main() {
         if (filterType === '1 month') {
             const oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1));
             filteredData = data.filter(price => price.date.toDate() >= oneMonthAgo);
+
+        } else if (filterType === '6 months') {
+            const sixMonthsAgo = new Date(now.setMonth(now.getMonth() - 6));
+            filteredData = data.filter(price => price.date.toDate() >= sixMonthsAgo);
         } else if (filterType === '1 year') {
             const oneMonthAgo = new Date(now.setFullYear(now.getFullYear() - 1));
             filteredData = data.filter(price => price.date.toDate() >= oneMonthAgo);
@@ -183,6 +191,10 @@ function Main() {
                     <label>
                         <input type="radio" value="1 year" checked={filterType === '1 year'} onChange={handleFilterChange} />
                         1 year
+                    </label>
+                    <label>
+                        <input type="radio" value="6 months" checked={filterType === '6 months'} onChange={handleFilterChange} />
+                        6 months
                     </label>
                     <label>
                         <input type="radio" value="1 month" checked={filterType === '1 month'} onChange={handleFilterChange} />
