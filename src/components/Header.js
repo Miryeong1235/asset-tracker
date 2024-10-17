@@ -25,7 +25,7 @@ const Header = () => {
         <header className="App-header">
             <img src={logo} className="App-logo" alt="test" />
             <p>
-                {greeting}, this is asset tracker app.
+                {greeting}, let's check your asset now.
             </p>
         </header>
     )

@@ -7,7 +7,7 @@ table {
 th,
 td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 8px 5px;
     text-align: center;
 }
 
@@ -23,8 +23,93 @@ tr:hover {
     cursor: pointer;
 }
 
+.durationRadioButton {
+    margin-top: 35px;
+}
+
 .durationRadioButton label {
-    margin-right: 15px;
+    margin-right: 12px;
+    color: #555;
     display: inline-flex;
     align-items: center;
+}
+
+#addPriceButton {
+    background-color: #75C9C8;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    font-size: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#addPriceButton:hover {
+    background-color: #2ba09e;
+}
+
+select {
+    padding: 6px 10px;
+    border: 2px solid #c3c3e8;
+    border-radius: 10px;
+    background-color: #f9f9ff;
+    font-size: 15px;
+    color: #555;
+    margin-right: 15px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+input[type="radio"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #8a8fe3;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+input[type="radio"]:checked::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #7075b6;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+
+input[type="date"],
+input[type="number"],
+form select {
+    padding: 6px 4px;
+    border: 2px solid #c3c3e8;
+    border-radius: 10px;
+    background-color: #f9f9ff;
+    font-size: 15px;
+    width: 180px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 5px;
+}
+
+select:focus,
+input[type="date"]:focus,
+input[type="number"]:focus {
+    border-color: #7075b6;
+    outline: none;
 }

@@ -138,7 +138,7 @@ function Main() {
     return (
         <div>
             <div>
-                <h2>Add New Data</h2>
+                <h3>Add New Data</h3>
 
                 {/* Dropdown for selecting account */}
                 <select value={selectedAccount} onChange={handleAccountChange}>
@@ -176,14 +176,13 @@ function Main() {
                             placeholder="Price"
                             required
                         />
-                        <button type="submit">Add Price Data</button>
+                        <button id="addPriceButton" type="submit">Add Price Data</button>
                     </form>
                 )}
-                <br />
 
                 {/* Price table */}
 
-                <div className='durationRadioButton'>
+                <div className="durationRadioButton">
                     <label>
                         <input type="radio" value="All" checked={filterType === 'All'} onChange={handleFilterChange} />
                         All
@@ -232,7 +231,7 @@ function Main() {
             <h3>Portfolio growth rate: {growthRate !== null ? `${growthRate}%` : `N/A`}</h3>
             <PriceGraph prices={filteredPrices} />
 
-        </div>
+        </div >
     );
 }
 
