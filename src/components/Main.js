@@ -154,7 +154,7 @@ function Main() {
                         type="text"
                         value={newAccountName}
                         onChange={(e) => setNewAccountName(e.target.value)}
-                        placeholder="Account Name"
+                        placeholder="Account name"
                         required
                     />
                 )}
@@ -176,7 +176,7 @@ function Main() {
                             placeholder="Price"
                             required
                         />
-                        <button id="addPriceButton" type="submit">Add Price Data</button>
+                        <button id="addPriceButton" type="submit">Add data</button>
                     </form>
                 )}
 
