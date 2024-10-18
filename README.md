@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# Asset Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Live Demo**: https://asset-tracker-130f8.web.app/
 
-## Available Scripts
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup and Installation](#setup-and-installation)
+- [Usage](#usage)
+- [Future Enhancements](#future-enhancements)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+Asset Tracker is a web application designed to help users manage multiple accounts and track assets. Users can input and track prices, filter account data, and visualize their investments' performance through interactive graphs.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The application uses **React.js** for the frontend and **Firebase Firestore** as a backend for real-time data storage and retrieval. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Account Management**: Track multiple investment accounts.
+- **Price Tracking**: Add and update prices for each account.
+- **Account Filtering**: View and filter data by individual accounts and based on specified time ranges.
+- **Dynamic Visualizations**: Graphically display stock performance and account balance over time.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+- **Frontend**: React.js, JavaScript, HTML5, CSS3
+- **Backend**: Firebase Firestore (for real-time database functionality)
+- **Deployment**: Firebase Hosting
+- **Charting Library**: Plotly.js (for interactive visualizations)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Setup and Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Make sure you have the following installed:
+- Node.js (v14 or higher)
+- Firebase CLI (for deployment and hosting)
 
-### `npm run eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone this repository:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   git clone https://github.com/Miryeong1235/asset-tracker.git
+   cd asset-tracker
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Install dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm install
+   ```
+   
+3. Set up Firebase configuration in a `.env` file at the root of the project:
 
-## Learn More
+   ```bash
+   REACT_APP_FIREBASE_API_KEY=<your-api-key>
+   REACT_APP_FIREBASE_AUTH_DOMAIN=<your-auth-domain>
+   REACT_APP_FIREBASE_PROJECT_ID=<your-project-id>
+   REACT_APP_FIREBASE_STORAGE_BUCKET=<your-storage-bucket>
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=<your-messaging-sender-id>
+   REACT_APP_FIREBASE_APP_ID=<your-app-id>
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Run the app locally:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```bash
+   npm start
+   ```
 
-### Code Splitting
+  The app will be available at `http://localhost:3000`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Deploy to Firebase
+1. Make sure Firebase CLI is installed:
 
-### Analyzing the Bundle Size
+   ```bash
+   npm install -g firebase-tools
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. Log in to Firebase
 
-### Making a Progressive Web App
+   ```bash
+   firebase login
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+4. Deploy the application
 
-### Advanced Configuration
+   ``` bash
+   firebase deploy
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Usage
+1. Sign Up / Log In: Create a new account or log in using existing credentials.
+2. Add Stock Price: Use the input form to add prices of assets for different accounts.
+3. View and Filter Data: Use the dropdown menu to filter data by accounts and view prices.
+4. Visualize Data: Check the dynamic charts displaying your assets over time.
 
-### Deployment
+## Future Enhancements
+ - **Mobile Responsiveness**: Improve the layout and UI for mobile devices.
+ - **Detailed Analytics**: Add more granular data analysis features, including insights into individual  portfolio growth over time.
+- **Account Combinations**: Implement the ability to filter and compare data across multiple account combinations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contact 
+* Misuzu Taniguchi - mtaniguchi3@my.bcit.ca
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgements 
+* <a href="https://fonts.google.com/">Google Fonts</a>
