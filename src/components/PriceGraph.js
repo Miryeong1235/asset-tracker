@@ -54,7 +54,7 @@ function PriceGraph({ prices }) {
                         type: 'scatter',
                         mode: 'lines+markers',
                         marker: { color: '#80A1D4' },
-                        line: { shape: 'hv' }, // 水平・垂直に線を引く
+                        line: { shape: 'hv' }, // Plot the line as vertical then horizontal
                     },
                 ]}
                 layout={{ width: 800, height: 400 }}
