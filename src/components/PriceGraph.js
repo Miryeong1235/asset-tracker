@@ -8,24 +8,44 @@ function PriceGraph({ prices }) {
     useEffect(() => {
         const sortedPrices = prices.sort((a, b) => a.date.toDate() - b.date.toDate());
 
-        const dateArray = sortedPrices.map(price => {
-            const date = price.date.toDate();
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        });
+        // complement missing dates
+        const interpolatedDates = [];
+        const interpolatedPrices = [];
 
-        const priceArray = sortedPrices.map(price => price.price);
+        for (let i = 0; i < sortedPrices.length; i++) {
+            const currentDate = sortedPrices[i].date.toDate();
+            const currentPrice = sortedPrices[i].price;
 
-        setDates(dateArray);
-        setPriceArray(priceArray);
+            // add current date and price
+            const currentDateString = formatDate(currentDate);
+            interpolatedDates.push(currentDateString);
+            interpolatedPrices.push(currentPrice);
 
+            if (i < sortedPrices.length - 1) {
+                const nextDate = sortedPrices[i + 1].date.toDate();
+                const nextDateString = formatDate(nextDate);
+
+                // If the next date is not the next day, add the next date with the same price
+                if (currentDateString !== nextDateString) {
+                    interpolatedDates.push(nextDateString);
+                    interpolatedPrices.push(currentPrice);
+                }
+            }
+        }
+
+        setDates(interpolatedDates);
+        setPriceArray(interpolatedPrices);
     }, [prices]);
+
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
     return (
         <div>
-
             <Plot
                 data={[
                     {
@@ -34,6 +54,7 @@ function PriceGraph({ prices }) {
                         type: 'scatter',
                         mode: 'lines+markers',
                         marker: { color: '#80A1D4' },
+                        line: { shape: 'hv' }, // 水平・垂直に線を引く
                     },
                 ]}
                 layout={{ width: 800, height: 400 }}
